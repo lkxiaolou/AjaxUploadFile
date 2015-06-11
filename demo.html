@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="./js/ajaxUploadFile.js"></script>
+	<script type="text/javascript">
+	onload=function(){
+		document.getElementById("sub").onclick=function(){
+			var ajaxFile=new uploadFile({
+				"url":"./up.php",
+				//"dataType":"text",
+				"timeout":5000,
+				"async":true,
+				"data":{
+					"name":"lanyue",
+					"age":100,
+					"sex":"男",
+					//多文件
+					"files":{
+						//file为name字段 后台可以通过$_FILES["file"]获得
+						"file":document.getElementById("file").files//文件数组
+					}
+					//单文件
+					/*"file":{
+						"test":document.getElementById("file").files[0],
+					},*/
+				},
+
+				onloadstart:function(){
+					//console.log("开始上传");
+				},
+				onload:function(data){
+					console.log(data);
+					console.log(data.name);
+				},
+				onerror:function(er){
+					console.log(er);
+				},
+				onabort:function(){
+					//alert("取消上传");
+				},
+				ontimeout:function(){
+					alert("上传时间到");
+				},
+				onloadend:function(){
+					alert("上传结束");
+				},
+				onprogress:function(e){
+					console.log(e);
+				}
+			});
+		}
+	}
+	</script>
+</head>
+<body>
+	<input type="file" value="" multiple="true" id="file">
+	<input type="button" value="submit" id="sub">
+</body>
+</html>
